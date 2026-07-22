@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight, MessageCircle, Twitter, Send, Youtube } from 'lucide-react'
 import Logo from './Logo'
 
@@ -84,16 +85,27 @@ export default function Footer() {
             <div key={col.title}>
               <h4 className="text-sm font-semibold text-white">{col.title}</h4>
               <ul className="mt-4 space-y-3">
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-slate-400 transition-colors hover:text-moss-300"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
+                {col.links.map((link) =>
+                  link === 'Dashboard' ? (
+                    <li key={link}>
+                      <Link
+                        to="/admin"
+                        className="text-sm text-slate-400 transition-colors hover:text-moss-300"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-sm text-slate-400 transition-colors hover:text-moss-300"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
           ))}

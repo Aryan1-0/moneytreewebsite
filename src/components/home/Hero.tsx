@@ -63,14 +63,14 @@ export default function Hero() {
       />
       <Fireflies />
 
-      <div className="container-page relative grid w-full items-center gap-8 py-10 lg:grid-cols-[1.05fr_1fr]">
+      <div className="container-page relative grid w-full items-center gap-6 py-10 lg:grid-cols-[0.92fr_1.28fr]">
         {/* Copy */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
-          <h1 className="text-5xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-[4.5rem]">
+          <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem] xl:text-[3.9rem]">
             Grow a Tree.
             <br />
             <span className="text-gradient">
@@ -105,7 +105,7 @@ export default function Hero() {
 
         {/* Blended tree island */}
         <motion.div
-          className="relative mx-auto w-full max-w-xl"
+          className="relative mx-auto w-full max-w-2xl lg:max-w-[46rem]"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
@@ -115,13 +115,15 @@ export default function Hero() {
             className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-[40%] rounded-full bg-moss-500/20 blur-[90px]"
             aria-hidden
           />
-          <div className="animate-float">
-            <img
-              src="/tree.png"
-              alt="A flourishing tree on a floating island — the heart of TreeGrow"
-              className="tree-blend w-full select-none"
-              draggable={false}
-            />
+          <div className="origin-center lg:scale-110 xl:scale-[1.15]">
+            <div className="animate-float">
+              <img
+                src="/tree.png"
+                alt="A flourishing tree on a floating island — the heart of TreeGrow"
+                className="tree-blend w-full select-none"
+                draggable={false}
+              />
+            </div>
           </div>
         </motion.div>
       </div>

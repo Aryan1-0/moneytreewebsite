@@ -50,12 +50,6 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link
-            to="/admin"
-            className="text-sm font-medium text-slate-400 transition-colors hover:text-moss-300"
-          >
-            Admin
-          </Link>
           <Button size="md">
             <Wallet className="h-4 w-4" />
             Connect Wallet
