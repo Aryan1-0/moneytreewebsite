@@ -55,12 +55,20 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
     >
-      {/* Ambient scene layers */}
-      <div className="absolute inset-0 grid-lines opacity-[0.5]" aria-hidden />
+      {/* Base backdrop — matched to the tree PNG's own edge colour (#02090d)
+          so the opaque image dissolves into the page with no visible box.
+          A faint teal lift sits on the LEFT (behind the copy) and fades out
+          well before the image on the right, keeping the image's perimeter
+          on the exact base colour. */}
       <div
-        className="absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-moss-500/10 blur-[120px]"
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(60% 80% at 24% 42%, rgba(18, 52, 42, 0.24), rgba(3, 12, 15, 0) 60%), #02090d',
+        }}
         aria-hidden
       />
+      <div className="absolute inset-0 grid-lines opacity-30" aria-hidden />
       <Fireflies />
 
       <div className="container-page relative grid w-full items-center gap-6 py-10 lg:grid-cols-[0.92fr_1.28fr]">

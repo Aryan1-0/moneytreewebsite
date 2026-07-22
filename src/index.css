@@ -45,20 +45,21 @@
     @apply rounded-2xl border border-white/[0.08] bg-night-800/60 backdrop-blur-xl;
   }
 
-  /* Blend the tree into the page without touching the tree itself.
-     The PNG's own background is already near-black (~rgb(2,7,11)), matching
-     the page, so we only need to feather the very outer edge of the image to
-     dissolve the rectangular seam. The tree + island stay fully crisp and at
-     their original colours — no blur, no colour shift, no clipping. */
+  /* The tree PNG is an opaque rectangle whose background is a uniform dark
+     teal-black (~#02090d on every edge). We blend it by matching the page
+     backdrop to that exact colour (see Hero) rather than masking the image —
+     so the tree + island stay fully crisp, uncropped and at their original
+     colours. A whisper-thin edge feather removes any 1–2px seam without
+     touching the tree (which sits well inside this radius). */
   .tree-blend {
     -webkit-mask-image: radial-gradient(
       ellipse 50% 50% at 50% 50%,
-      #000 88%,
+      #000 94%,
       transparent 100%
     );
     mask-image: radial-gradient(
       ellipse 50% 50% at 50% 50%,
-      #000 88%,
+      #000 94%,
       transparent 100%
     );
   }
