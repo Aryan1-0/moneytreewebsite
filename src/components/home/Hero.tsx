@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { Sprout, ArrowRight, Users, Cloud, Globe2, Trees } from 'lucide-react'
 import Button from '../ui/Button'
-import Fireflies from './Fireflies'
 import { useCountUp } from '../../hooks/useCountUp'
 
 const stats = [
@@ -55,21 +54,11 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
     >
-      {/* Base backdrop — matched to the tree PNG's own edge colour (#02090d)
-          so the opaque image dissolves into the page with no visible box.
-          A faint teal lift sits on the LEFT (behind the copy) and fades out
-          well before the image on the right, keeping the image's perimeter
-          on the exact base colour. */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(60% 80% at 24% 42%, rgba(18, 52, 42, 0.24), rgba(3, 12, 15, 0) 60%), #02090d',
-        }}
-        aria-hidden
-      />
-      <div className="absolute inset-0 grid-lines opacity-30" aria-hidden />
-      <Fireflies />
+      {/* Flat backdrop matched EXACTLY to the tree PNG's edge colour (#02090d).
+          No gradients / grid / mask so there is nothing to create a seam,
+          "spherical outline" or dotted lines — the image's own baked-in glow
+          and bokeh are the only ambiance, so it blends pixel-for-pixel. */}
+      <div className="absolute inset-0" style={{ background: '#02090d' }} aria-hidden />
 
       <div className="container-page relative grid w-full items-center gap-6 py-10 lg:grid-cols-[0.92fr_1.28fr]">
         {/* Copy */}
@@ -111,36 +100,38 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Blended tree island */}
+        {/* Tree island — raw image, no CSS glow/mask. Its own dark background
+            (#02090d) matches the Hero backdrop, so it blends with no seam. */}
         <motion.div
           className="relative mx-auto w-full max-w-2xl lg:max-w-[46rem]"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
         >
-          {/* Warm glow beneath the lantern / island */}
-          <div
-            className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-[40%] rounded-full bg-moss-500/20 blur-[90px]"
-            aria-hidden
-          />
           <div className="origin-center lg:scale-110 xl:scale-[1.15]">
-            <div className="animate-float">
+            <div className="animate-float relative">
+              {/* Ambient fill: the SAME image at the SAME size, just blurred,
+                  sitting behind the sharp one. Because it is not upscaled, its
+                  EDGES stay the image's dark #02090d — invisible on the dark
+                  backdrop — while its centre glow feathers softly around the
+                  tree. So the sharp tree's hard rectangular edge melts into an
+                  exact-colour blurred copy of itself: no box, no fake glow. */}
+              <img
+                src="/tree.png"
+                aria-hidden
+                draggable={false}
+                className="pointer-events-none absolute inset-0 h-full w-full select-none blur-[26px]"
+              />
               <img
                 src="/tree.png"
                 alt="A flourishing tree on a floating island — the heart of TreeGrow"
-                className="tree-blend w-full select-none"
+                className="tree-blend relative select-none"
                 draggable={false}
               />
             </div>
           </div>
         </motion.div>
       </div>
-
-      {/* Fade the hero into the next section */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-night-950"
-        aria-hidden
-      />
     </section>
   )
 }
