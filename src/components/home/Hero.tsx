@@ -102,8 +102,8 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Tree island — raw image, no CSS glow/mask. Its own dark background
-            (#02090d) matches the Hero backdrop, so it blends with no seam.
+        {/* Tree island — the sharp image with an elliptical edge-fade (see
+            .tree-blend) so its rectangle dissolves into the #02090d backdrop.
             Sized in vw and right-aligned so it can grow large and overlap the
             copy on the left; sits BELOW the text (z-10). No float animation. */}
         <motion.div
@@ -114,18 +114,6 @@ export default function Hero() {
         >
           <div>
             <div className="relative">
-              {/* Ambient fill: the SAME image at the SAME size, just blurred,
-                  sitting behind the sharp one. Because it is not upscaled, its
-                  EDGES stay the image's dark #02090d — invisible on the dark
-                  backdrop — while its centre glow feathers softly around the
-                  tree. So the sharp tree's hard rectangular edge melts into an
-                  exact-colour blurred copy of itself: no box, no fake glow. */}
-              <img
-                src="/tree.png"
-                aria-hidden
-                draggable={false}
-                className="pointer-events-none absolute inset-0 h-full w-full select-none blur-[26px]"
-              />
               <img
                 src="/tree.png"
                 alt="A flourishing tree on a floating island — the heart of TreeGrow"

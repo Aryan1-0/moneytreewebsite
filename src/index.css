@@ -47,15 +47,28 @@
     @apply rounded-2xl border border-white/[0.08] bg-night-800/60 backdrop-blur-xl;
   }
 
-  /* The tree PNG is an opaque rectangle whose background is a uniform dark
-     teal-black (~#02090d on every edge). We blend it purely by matching the
-     Hero backdrop to that exact colour — NO mask, NO feather, NO glow. That
-     means no elliptical vignette / "spherical outline" on the image; the tree
-     keeps its own baked-in dots and glow, and its dark edges dissolve into
-     the identical page colour. */
+  /* The tree PNG is an opaque rectangle with a teal wash across the frame
+     (edges ~rgb(2,11,16), interior glow brighter) that is lighter than the
+     #02090d backdrop — so the rectangle reads as a box. The tree + island
+     only reach ~54% of the width and ~76% of the height, leaving a wide dark
+     margin. We fade that margin into a soft ELLIPSE with a long, gradual
+     falloff: the rectangular edges dissolve (no box) without a hard ring
+     ("spherical outline"), and the tree itself is never touched. */
   .tree-blend {
     display: block;
     width: 100%;
+    -webkit-mask-image: radial-gradient(
+      ellipse 55% 60% at 50% 47%,
+      #000 60%,
+      rgba(0, 0, 0, 0.55) 82%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 55% 60% at 50% 47%,
+      #000 60%,
+      rgba(0, 0, 0, 0.55) 82%,
+      transparent 100%
+    );
   }
 }
 
