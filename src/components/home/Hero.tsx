@@ -51,7 +51,10 @@ function Stat({
 
 export default function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden pt-[72px]">
+    <section
+      id="home"
+      className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
+    >
       {/* Ambient scene layers */}
       <div className="absolute inset-0 grid-lines opacity-[0.5]" aria-hidden />
       <div
@@ -60,24 +63,21 @@ export default function Hero() {
       />
       <Fireflies />
 
-      <div className="container-page relative grid items-center gap-8 pb-16 pt-14 lg:grid-cols-[1.05fr_1fr] lg:pb-24 lg:pt-20">
+      <div className="container-page relative grid w-full items-center gap-8 py-10 lg:grid-cols-[1.05fr_1fr]">
         {/* Copy */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-moss-300">
-            <Sprout className="h-3.5 w-3.5" />
-            Crypto with real-world impact
-          </div>
-
-          <h1 className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[4.25rem]">
+          <h1 className="text-5xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-[4.5rem]">
             Grow a Tree.
             <br />
-            Build a <span className="text-gradient">Greener</span>
-            <br />
-            Future.
+            <span className="text-gradient">
+              Build a Greener
+              <br />
+              Future.
+            </span>
           </h1>
 
           <p className="mt-6 max-w-md text-base leading-relaxed text-slate-400">

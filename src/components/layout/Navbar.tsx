@@ -7,6 +7,7 @@ import Button from '../ui/Button'
 const links = [
   { label: 'Home', href: '#home' },
   { label: 'Garden', href: '#how' },
+  { label: 'Dashboard', href: '#features' },
   { label: 'Marketplace', href: '#tokenomics' },
   { label: 'Token', href: '#tokenomics' },
   { label: 'Community', href: '#community' },
