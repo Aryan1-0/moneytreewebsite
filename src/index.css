@@ -33,7 +33,9 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-br from-moss-300 via-moss-400 to-moss-600 bg-clip-text text-transparent;
+    /* Natural leaf-green matched to the brand reference (less mint/emerald,
+       more of a fresh grass green), kept fairly uniform across the words. */
+    @apply bg-gradient-to-br from-[#8fd35a] via-[#5fbd4b] to-[#48a23f] bg-clip-text text-transparent;
   }
 
   /* Frosted card used across marketing + admin */

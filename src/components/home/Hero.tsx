@@ -60,9 +60,11 @@ export default function Hero() {
           and bokeh are the only ambiance, so it blends pixel-for-pixel. */}
       <div className="absolute inset-0" style={{ background: '#02090d' }} aria-hidden />
 
-      <div className="container-page relative grid w-full items-center gap-6 py-10 lg:grid-cols-[0.92fr_1.28fr]">
-        {/* Copy */}
+      <div className="relative mx-auto grid w-full max-w-[1600px] items-center gap-6 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1.1fr]">
+        {/* Copy — layered ABOVE the tree so the (larger) image can overlap the
+            text area while the text stays fully readable on top. */}
         <motion.div
+          className="relative z-20"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
@@ -101,15 +103,17 @@ export default function Hero() {
         </motion.div>
 
         {/* Tree island — raw image, no CSS glow/mask. Its own dark background
-            (#02090d) matches the Hero backdrop, so it blends with no seam. */}
+            (#02090d) matches the Hero backdrop, so it blends with no seam.
+            Sized in vw and right-aligned so it can grow large and overlap the
+            copy on the left; sits BELOW the text (z-10). No float animation. */}
         <motion.div
-          className="relative mx-auto w-full max-w-2xl lg:max-w-[46rem]"
-          initial={{ opacity: 0, scale: 0.92 }}
+          className="relative z-10 mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:w-[50vw] lg:max-w-[900px]"
+          initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
+          transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
         >
-          <div className="origin-center lg:scale-110 xl:scale-[1.15]">
-            <div className="animate-float relative">
+          <div>
+            <div className="relative">
               {/* Ambient fill: the SAME image at the SAME size, just blurred,
                   sitting behind the sharp one. Because it is not upscaled, its
                   EDGES stay the image's dark #02090d — invisible on the dark
