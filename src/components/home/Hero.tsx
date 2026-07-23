@@ -63,7 +63,7 @@ export default function Hero() {
           layout. Vertically centred via flex (not a transform, which would
           clash with Framer's animation). Sits BELOW the copy (z-10); the
           .tree-blend elliptical fade dissolves its rectangle into the backdrop. */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[72vw] max-w-[1380px] items-center lg:flex">
+      <div className="pointer-events-none absolute inset-y-0 right-[-50px] z-10 hidden w-[72vw] max-w-[1380px] items-center lg:flex">
         <motion.img
           src="/tree.png"
           alt=""
