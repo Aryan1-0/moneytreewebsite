@@ -11,11 +11,11 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-moss-400/60 disabled:opacity-50 disabled:pointer-events-none'
+  'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-moss-400/60 disabled:opacity-50 disabled:pointer-events-none'
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-moss-500 text-night-950 hover:bg-moss-400 shadow-lg shadow-moss-500/25 hover:shadow-moss-400/40 hover:-translate-y-0.5',
+    'bg-moss-400 text-night-950 hover:bg-moss-300 shadow-lg shadow-moss-400/25 hover:shadow-glow/40 hover:-translate-y-0.5',
   ghost: 'text-slate-200 hover:text-white hover:bg-white/5',
   outline:
     'border border-white/15 text-slate-100 hover:border-moss-400/50 hover:bg-moss-400/5 hover:text-white',

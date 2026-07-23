@@ -11,18 +11,21 @@ export default {
           800: '#0c1a15',
           700: '#12241d',
         },
+        // Brand palette
+        //   Primary #8EE65A · Secondary #69C248 · Dark #2D7A3F · Glow #B8FF86
         moss: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
+          50: '#f3fde9',
+          100: '#e3fbcd',
+          200: '#c9f6a2',
+          300: '#B8FF86', // Glow
+          400: '#8EE65A', // Primary brand green
+          500: '#69C248', // Secondary green
+          600: '#4f9e3b',
+          700: '#2D7A3F', // Dark green
+          800: '#245f32',
+          900: '#1a4726',
         },
+        glow: '#B8FF86',
         ember: '#f5b544',
       },
       fontFamily: {
