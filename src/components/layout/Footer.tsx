@@ -26,7 +26,7 @@ export default function Footer() {
   const [sent, setSent] = useState(false)
 
   return (
-    <footer className="relative mt-24 border-t border-white/[0.06]">
+    <footer className="relative mt-24">
       <div className="container-page py-14">
         {/* Newsletter */}
         <div className="glass flex flex-col gap-6 rounded-3xl p-8 md:flex-row md:items-center md:justify-between">

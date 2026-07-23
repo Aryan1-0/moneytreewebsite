@@ -6,13 +6,13 @@ export default function CTA() {
   return (
     <section className="container-page py-12">
       <Reveal>
-        <div className="relative overflow-hidden rounded-3xl border border-moss-400/20 bg-gradient-to-br from-moss-900/40 via-night-800 to-night-900 px-8 py-16 text-center sm:px-16">
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-8 py-16 text-center sm:px-16">
           <div
-            className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-moss-500/20 blur-[100px]"
+            className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-moss-500/10 blur-[110px]"
             aria-hidden
           />
           <div
-            className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-ember/10 blur-[100px]"
+            className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-ember/[0.06] blur-[110px]"
             aria-hidden
           />
           <div className="relative">

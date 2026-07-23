@@ -54,9 +54,10 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
     >
-      {/* Flat backdrop matched EXACTLY to the tree PNG's edge colour (#02090d)
-          so the elliptical edge-fade dissolves the image into the page. */}
-      <div className="absolute inset-0" style={{ background: '#02090d' }} aria-hidden />
+      {/* No section backdrop — the body's single continuous #02090d canvas
+          shows through so the hero flows seamlessly into the sections below.
+          The tree PNG's edge colour matches #02090d, so its elliptical
+          edge-fade still dissolves cleanly into that shared canvas. */}
 
       {/* Tree island (desktop) — absolutely positioned on the right so it can
           be large (1.5×) and overlap the copy without disturbing the text
