@@ -54,17 +54,32 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
     >
-      {/* Flat backdrop matched EXACTLY to the tree PNG's edge colour (#02090d).
-          No gradients / grid / mask so there is nothing to create a seam,
-          "spherical outline" or dotted lines — the image's own baked-in glow
-          and bokeh are the only ambiance, so it blends pixel-for-pixel. */}
+      {/* Flat backdrop matched EXACTLY to the tree PNG's edge colour (#02090d)
+          so the elliptical edge-fade dissolves the image into the page. */}
       <div className="absolute inset-0" style={{ background: '#02090d' }} aria-hidden />
 
-      <div className="relative mx-auto grid w-full max-w-[1600px] items-center gap-6 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1.1fr]">
-        {/* Copy — layered ABOVE the tree so the (larger) image can overlap the
-            text area while the text stays fully readable on top. */}
+      {/* Tree island (desktop) — absolutely positioned on the right so it can
+          be large (1.5×) and overlap the copy without disturbing the text
+          layout. Vertically centred via flex (not a transform, which would
+          clash with Framer's animation). Sits BELOW the copy (z-10); the
+          .tree-blend elliptical fade dissolves its rectangle into the backdrop. */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[72vw] max-w-[1380px] items-center lg:flex">
+        <motion.img
+          src="/tree.png"
+          alt=""
+          className="tree-blend w-full select-none"
+          draggable={false}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
+        />
+      </div>
+
+      {/* Copy — constrained to the left and layered ABOVE the tree (z-20) so it
+          stays fully readable over the image's dark left margin. */}
+      <div className="container-page relative z-20 py-10">
         <motion.div
-          className="relative z-20"
+          className="max-w-lg"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
@@ -95,32 +110,20 @@ export default function Hero() {
             </Button>
           </div>
 
+          {/* Tree island (mobile) — stacked in flow below the copy. */}
+          <div className="mt-10 lg:hidden">
+            <img
+              src="/tree.png"
+              alt="A flourishing tree on a floating island — the heart of TreeGrow"
+              className="tree-blend mx-auto w-full max-w-md select-none"
+              draggable={false}
+            />
+          </div>
+
           <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 sm:gap-x-4">
             {stats.map((s) => (
               <Stat key={s.label} {...s} />
             ))}
-          </div>
-        </motion.div>
-
-        {/* Tree island — the sharp image with an elliptical edge-fade (see
-            .tree-blend) so its rectangle dissolves into the #02090d backdrop.
-            Sized in vw and right-aligned so it can grow large and overlap the
-            copy on the left; sits BELOW the text (z-10). No float animation. */}
-        <motion.div
-          className="relative z-10 mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:w-[50vw] lg:max-w-[900px]"
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
-        >
-          <div>
-            <div className="relative">
-              <img
-                src="/tree.png"
-                alt="A flourishing tree on a floating island — the heart of TreeGrow"
-                className="tree-blend relative select-none"
-                draggable={false}
-              />
-            </div>
           </div>
         </motion.div>
       </div>
