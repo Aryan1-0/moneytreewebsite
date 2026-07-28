@@ -10,7 +10,7 @@ const links = [
   { label: 'Dashboard', href: '#features' },
   { label: 'Marketplace', href: '#tokenomics' },
   { label: 'Token', href: '#tokenomics' },
-  { label: 'Community', href: '#community' },
+  { label: 'Community', href: '/community' },
 ]
 
 export default function Navbar() {
