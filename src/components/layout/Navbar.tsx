@@ -38,15 +38,26 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="relative rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            l.href === '/community' ? (
+              <Link
+                key={l.label}
+                to="/community"
+                state={{ from: 'home' }}
+                className="relative rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                {l.label}
+              </Link>
+            ) : (
+              <a
+                key={l.label}
+                href={l.href}
+                className="relative rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              >
+                {l.label}
+              </a>
+            ),
+          )}
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -68,7 +79,18 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-white/[0.06] bg-night-950/95 px-5 py-4 backdrop-blur-xl lg:hidden">
           <div className="flex flex-col gap-1">
-            {links.map((l) => (
+            {links.map((l) =>
+              l.href === '/community' ? (
+                <Link
+                  key={l.label}
+                  to="/community"
+                  state={{ from: 'home' }}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white"
+                >
+                  {l.label}
+                </Link>
+              ) : (
               <a
                 key={l.label}
                 href={l.href}
@@ -77,7 +99,8 @@ export default function Navbar() {
               >
                 {l.label}
               </a>
-            ))}
+              ),
+            )}
             <Link
               to="/admin"
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-moss-300 hover:bg-white/5"

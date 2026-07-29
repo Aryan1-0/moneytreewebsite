@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 import { Sprout, ArrowRight, Users, Cloud, Globe2, Trees } from 'lucide-react'
 import Button from '../ui/Button'
 import { useCountUp } from '../../hooks/useCountUp'
@@ -49,6 +50,12 @@ function Stat({
 }
 
 export default function Hero() {
+  // The hero only "uncompresses" (plays its entrance) on a fresh load or when
+  // arriving from the community hero (atTop). Coming back from deep in the
+  // community feed passes animateHero:false, so the hero simply appears.
+  const animateHero =
+    (useLocation().state as { animateHero?: boolean } | null)?.animateHero !== false
+
   return (
     <section
       id="home"
@@ -70,7 +77,7 @@ export default function Hero() {
           alt=""
           className="tree-blend w-full select-none"
           draggable={false}
-          initial={{ opacity: 0, scale: 0.94 }}
+          initial={animateHero ? { opacity: 0, scale: 0.94 } : false}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
         />
@@ -81,7 +88,7 @@ export default function Hero() {
       <div className="container-page relative z-20 py-10">
         <motion.div
           className="max-w-lg"
-          initial={{ opacity: 0, y: 28 }}
+          initial={animateHero ? { opacity: 0, y: 28 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
         >

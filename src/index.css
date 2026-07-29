@@ -11,6 +11,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Scoped to the community page (toggled on mount) — gentle scroll-snap
+     between the hero and the content section, offset for the sticky nav. */
+  html.snap-y {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 68px;
+  }
+
   body {
     @apply text-slate-200 font-sans antialiased;
     /* ONE continuous dark canvas for the whole page — the same base colour as
