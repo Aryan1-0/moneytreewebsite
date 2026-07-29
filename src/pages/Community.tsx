@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Leaf,
@@ -20,22 +19,17 @@ import {
   Calendar,
   Mic,
   MoreHorizontal,
-  Wallet,
-  Globe,
   MessageSquare,
   Twitter,
   Send,
   Youtube,
 } from 'lucide-react'
-import Logo from '../components/layout/Logo'
-import Button from '../components/ui/Button'
+import Navbar from '../components/layout/Navbar'
 
 const card =
   'rounded-2xl border border-white/[0.07] bg-[#0d1712]/70 backdrop-blur-sm'
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const
-
-const navLinks = ['Garden', 'Dashboard', 'Marketplace', 'Token']
 
 const communityStats = [
   { icon: Users, label: 'Total Members', value: '5,230' },
@@ -106,8 +100,6 @@ function SectionTitle({
 }
 
 export default function Community() {
-  const navigate = useNavigate()
-
   // Horizontal clip only while this page is mounted, so the slide-in cards
   // never produce a horizontal scrollbar.
   useEffect(() => {
@@ -130,52 +122,13 @@ export default function Community() {
     transition: { duration: 0.6, delay, ease: EASE },
   })
 
-  const goHome = () => navigate('/')
-
   return (
     <div className="text-slate-200">
-      {/* ── Top nav (matched to the home navbar so it never shifts) ─── */}
-      <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#081410]/85 backdrop-blur-xl">
-        <div className="container-page flex h-[72px] items-center justify-between">
-          <button onClick={goHome} aria-label="TreeGrow home">
-            <Logo />
-          </button>
-          <nav className="hidden items-center gap-1 lg:flex">
-            <button
-              onClick={goHome}
-              className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
-            >
-              Home
-            </button>
-            {navLinks.map((l) => (
-              <Link
-                key={l}
-                to="/"
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
-              >
-                {l}
-              </Link>
-            ))}
-            <span className="relative rounded-full px-4 py-2 text-sm font-semibold text-moss-400">
-              Community
-              <span className="absolute -bottom-2 left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full bg-moss-400" />
-            </span>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Button size="md">
-              <Wallet className="h-4 w-4" />
-              Connect Wallet
-            </Button>
-            <button className="hidden items-center gap-1 rounded-xl border border-white/10 px-2.5 py-2 text-slate-300 transition-colors hover:text-white sm:flex">
-              <Globe className="h-4 w-4" />
-              <ChevronDown className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Same navbar as the home page */}
+      <Navbar />
 
-      {/* ── Content ──────────────────────────────────────────── */}
-      <section className="container-page pb-10 pt-6">
+      {/* ── Content (offset for the fixed navbar) ────────────── */}
+      <section className="container-page pb-10 pt-[92px]">
         <div className="grid gap-6 lg:grid-cols-[330px_1fr_370px]">
           {/* Tabs (span left + center) — from left */}
           <motion.div className="lg:col-span-2" {...slide('left')}>
