@@ -118,10 +118,10 @@ export default function Community() {
   const navigate = useNavigate()
   const cameFromHome = (location.state as { from?: string } | null)?.from === 'home'
 
-  // Enable scroll-snap only while this page is mounted (window is the scroller).
+  // Enable scroll-snap + horizontal clip only while this page is mounted.
   useEffect(() => {
-    document.documentElement.classList.add('snap-y')
-    return () => document.documentElement.classList.remove('snap-y')
+    document.documentElement.classList.add('community-view')
+    return () => document.documentElement.classList.remove('community-view')
   }, [])
 
   // Scroll-triggered slide-in (re-runs every time the card re-enters the frame).
@@ -139,32 +139,35 @@ export default function Community() {
     transition: { duration: 0.6, delay, ease: EASE },
   })
 
-  // Hero build-in — ONLY plays when navigating in from the home page.
-  const heroItem = (offset: Record<string, number>, delay = 0) => ({
-    initial: cameFromHome ? { opacity: 0, ...offset } : false,
-    animate: { opacity: 1, x: 0, y: 0, scale: 1 },
-    transition: { duration: 0.8, delay, ease: EASE },
-  })
+  // Hero "compress" — when arriving from home the whole hero scales down into
+  // place (as if the big home hero was dragged in by its bottom-right corner);
+  // top-left stays anchored. Only plays when navigating in from the home page.
+  const compress = {
+    initial: cameFromHome ? { scale: 1.08, opacity: 0 } : false,
+    animate: { scale: 1, opacity: 1 },
+    transition: { duration: 0.75, ease: EASE },
+    style: { transformOrigin: '0% 0%' as const },
+  }
 
   // Leaving to home: only ask the home hero to "uncompress" if we're at the top
   // (i.e. the community hero is on screen). Otherwise home appears normally.
   const goHome = () => {
     const atTop = window.scrollY < 80
-    navigate('/', { state: { animateHero: atTop } })
+    navigate('/', { state: { from: 'community', animateHero: atTop } })
   }
 
   return (
     <div className="text-slate-200">
-      {/* ── Top nav ───────────────────────────────────────────── */}
+      {/* ── Top nav (matched to the home navbar so it never shifts) ─── */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#081410]/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-[68px] max-w-[1480px] items-center justify-between px-6">
+        <div className="container-page flex h-[72px] items-center justify-between">
           <button onClick={goHome} aria-label="TreeGrow home">
             <Logo />
           </button>
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             <button
               onClick={goHome}
-              className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
             >
               Home
             </button>
@@ -172,14 +175,14 @@ export default function Community() {
               <Link
                 key={l}
                 to="/"
-                className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
               >
                 {l}
               </Link>
             ))}
-            <span className="relative text-sm font-semibold text-moss-400">
+            <span className="relative rounded-full px-4 py-2 text-sm font-semibold text-moss-400">
               Community
-              <span className="absolute -bottom-[26px] left-0 h-0.5 w-full rounded-full bg-moss-400" />
+              <span className="absolute -bottom-2 left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full bg-moss-400" />
             </span>
           </nav>
           <div className="flex items-center gap-3">
@@ -197,12 +200,19 @@ export default function Community() {
 
       {/* ── Hero (snap section, 100vh) ───────────────────────── */}
       <section
-        className="mx-auto flex min-h-[calc(100svh-68px)] max-w-[1480px] items-center px-6"
+        className="container-page flex min-h-[calc(100svh-72px)] items-center"
         style={{ scrollSnapAlign: 'start' }}
       >
-        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.82fr_1fr_370px]">
+        {/* The whole hero scales in as ONE unit (compress) from the home page. */}
+        <motion.div
+          className="grid w-full items-center gap-8 lg:grid-cols-[0.82fr_1fr_370px]"
+          initial={compress.initial}
+          animate={compress.animate}
+          transition={compress.transition}
+          style={compress.style}
+        >
           {/* Copy */}
-          <motion.div {...heroItem({ x: -70 })}>
+          <div>
             <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-white">
               Grow Together.
               <br />
@@ -218,10 +228,10 @@ export default function Community() {
                 Explore Projects
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Tree + stats */}
-          <motion.div className="relative" {...heroItem({ scale: 0.9, y: 24 }, 0.1)}>
+          <div className="relative">
             <img
               src="/tree.png"
               alt="TreeGrow community tree"
@@ -241,10 +251,10 @@ export default function Community() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Community Impact card — slides in from the right */}
-          <motion.div className={`${card} p-5`} {...slide('right', 0.1)}>
+          {/* Community Impact card */}
+          <div className={`${card} p-5`}>
             <h3 className="text-base font-semibold text-white">Community Impact</h3>
             <p className="mt-0.5 text-xs text-slate-400">Making a Real Difference</p>
             <div className="mt-4 overflow-hidden rounded-xl bg-[#0a1410] ring-1 ring-white/[0.05]">
@@ -266,13 +276,13 @@ export default function Community() {
             <button className="mt-4 w-full rounded-xl bg-gradient-to-r from-moss-500 to-moss-400 py-2.5 text-sm font-semibold text-night-950 transition-opacity hover:opacity-90">
               View Impact
             </button>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* ── Content (snap section) ───────────────────────────── */}
       <section
-        className="mx-auto max-w-[1480px] px-6 pb-10 pt-4"
+        className="container-page pb-10 pt-4"
         style={{ scrollSnapAlign: 'start' }}
       >
         <div className="grid gap-6 lg:grid-cols-[330px_1fr_370px]">

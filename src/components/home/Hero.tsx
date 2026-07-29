@@ -50,16 +50,22 @@ function Stat({
 }
 
 export default function Hero() {
-  // The hero only "uncompresses" (plays its entrance) on a fresh load or when
-  // arriving from the community hero (atTop). Coming back from deep in the
-  // community feed passes animateHero:false, so the hero simply appears.
-  const animateHero =
-    (useLocation().state as { animateHero?: boolean } | null)?.animateHero !== false
+  const st = useLocation().state as { from?: string; animateHero?: boolean } | null
+  const fromCommunity = st?.from === 'community'
+  // "Uncompress": whole-hero scale-up, but ONLY when returning from the
+  // community hero at the top. Fresh loads keep the subtle default entrance;
+  // returning from deep in the community feed appears statically.
+  const expand = fromCommunity && st?.animateHero === true
+  const normalEntrance = !fromCommunity
 
   return (
-    <section
+    <motion.section
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
+      initial={expand ? { scale: 0.92, opacity: 0 } : false}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
+      style={{ transformOrigin: '0% 0%' }}
     >
       {/* No section backdrop — the body's single continuous #02090d canvas
           shows through so the hero flows seamlessly into the sections below.
@@ -77,7 +83,7 @@ export default function Hero() {
           alt=""
           className="tree-blend w-full select-none"
           draggable={false}
-          initial={animateHero ? { opacity: 0, scale: 0.94 } : false}
+          initial={normalEntrance ? { opacity: 0, scale: 0.94 } : false}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
         />
@@ -88,7 +94,7 @@ export default function Hero() {
       <div className="container-page relative z-20 py-10">
         <motion.div
           className="max-w-lg"
-          initial={animateHero ? { opacity: 0, y: 28 } : false}
+          initial={normalEntrance ? { opacity: 0, y: 28 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
@@ -135,6 +141,6 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
