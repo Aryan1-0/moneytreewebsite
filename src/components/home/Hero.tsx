@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useLocation } from 'react-router-dom'
 import { Sprout, ArrowRight, Users, Cloud, Globe2, Trees } from 'lucide-react'
 import Button from '../ui/Button'
 import { useCountUp } from '../../hooks/useCountUp'
@@ -50,22 +49,10 @@ function Stat({
 }
 
 export default function Hero() {
-  const st = useLocation().state as { from?: string; animateHero?: boolean } | null
-  const fromCommunity = st?.from === 'community'
-  // "Uncompress": whole-hero scale-up, but ONLY when returning from the
-  // community hero at the top. Fresh loads keep the subtle default entrance;
-  // returning from deep in the community feed appears statically.
-  const expand = fromCommunity && st?.animateHero === true
-  const normalEntrance = !fromCommunity
-
   return (
-    <motion.section
+    <section
       id="home"
       className="relative flex min-h-[calc(100svh)] flex-col justify-center overflow-hidden pt-[72px]"
-      initial={expand ? { scale: 0.92, opacity: 0 } : false}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
-      style={{ transformOrigin: '0% 0%' }}
     >
       {/* No section backdrop — the body's single continuous #02090d canvas
           shows through so the hero flows seamlessly into the sections below.
@@ -83,7 +70,7 @@ export default function Hero() {
           alt=""
           className="tree-blend w-full select-none"
           draggable={false}
-          initial={normalEntrance ? { opacity: 0, scale: 0.94 } : false}
+          initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
         />
@@ -94,7 +81,7 @@ export default function Hero() {
       <div className="container-page relative z-20 py-10">
         <motion.div
           className="max-w-lg"
-          initial={normalEntrance ? { opacity: 0, y: 28 } : false}
+          initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
         >
@@ -141,6 +128,6 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Leaf,
@@ -29,7 +29,6 @@ import {
 } from 'lucide-react'
 import Logo from '../components/layout/Logo'
 import Button from '../components/ui/Button'
-import ImpactMap from '../components/community/ImpactMap'
 
 const card =
   'rounded-2xl border border-white/[0.07] bg-[#0d1712]/70 backdrop-blur-sm'
@@ -37,13 +36,6 @@ const card =
 const EASE = [0.21, 0.47, 0.32, 0.98] as const
 
 const navLinks = ['Garden', 'Dashboard', 'Marketplace', 'Token']
-
-const heroStats = [
-  { icon: TreePine, value: '12,450', label: 'Trees Planted' },
-  { icon: Users, value: '5,230', label: 'Members' },
-  { icon: Leaf, value: '$2.35M', label: 'CO₂ Offset' },
-  { icon: Globe2, value: '18', label: 'Countries' },
-]
 
 const communityStats = [
   { icon: Users, label: 'Total Members', value: '5,230' },
@@ -114,11 +106,10 @@ function SectionTitle({
 }
 
 export default function Community() {
-  const location = useLocation()
   const navigate = useNavigate()
-  const cameFromHome = (location.state as { from?: string } | null)?.from === 'home'
 
-  // Enable scroll-snap + horizontal clip only while this page is mounted.
+  // Horizontal clip only while this page is mounted, so the slide-in cards
+  // never produce a horizontal scrollbar.
   useEffect(() => {
     document.documentElement.classList.add('community-view')
     return () => document.documentElement.classList.remove('community-view')
@@ -139,22 +130,7 @@ export default function Community() {
     transition: { duration: 0.6, delay, ease: EASE },
   })
 
-  // Hero "compress" — when arriving from home the whole hero scales down into
-  // place (as if the big home hero was dragged in by its bottom-right corner);
-  // top-left stays anchored. Only plays when navigating in from the home page.
-  const compress = {
-    initial: cameFromHome ? { scale: 1.08, opacity: 0 } : false,
-    animate: { scale: 1, opacity: 1 },
-    transition: { duration: 0.75, ease: EASE },
-    style: { transformOrigin: '0% 0%' as const },
-  }
-
-  // Leaving to home: only ask the home hero to "uncompress" if we're at the top
-  // (i.e. the community hero is on screen). Otherwise home appears normally.
-  const goHome = () => {
-    const atTop = window.scrollY < 80
-    navigate('/', { state: { from: 'community', animateHero: atTop } })
-  }
+  const goHome = () => navigate('/')
 
   return (
     <div className="text-slate-200">
@@ -198,93 +174,8 @@ export default function Community() {
         </div>
       </header>
 
-      {/* ── Hero (snap section, 100vh) ───────────────────────── */}
-      <section
-        className="container-page flex min-h-[calc(100svh-72px)] items-center"
-        style={{ scrollSnapAlign: 'start' }}
-      >
-        {/* The whole hero scales in as ONE unit (compress) from the home page. */}
-        <motion.div
-          className="grid w-full items-center gap-8 lg:grid-cols-[0.82fr_1fr_370px]"
-          initial={compress.initial}
-          animate={compress.animate}
-          transition={compress.transition}
-          style={compress.style}
-        >
-          {/* Copy */}
-          <div>
-            <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-white">
-              Grow Together.
-              <br />
-              <span className="text-gradient">Create Tomorrow.</span>
-            </h1>
-            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-slate-400">
-              A community of changemakers building a greener world, one tree at a
-              time.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button size="lg">Join Community</Button>
-              <Button variant="outline" size="lg">
-                Explore Projects
-              </Button>
-            </div>
-          </div>
-
-          {/* Tree + stats */}
-          <div className="relative">
-            <img
-              src="/tree.png"
-              alt="TreeGrow community tree"
-              className="tree-blend mx-auto w-full max-w-xl select-none"
-              draggable={false}
-            />
-            <div className="mt-2 grid grid-cols-4 gap-3">
-              {heroStats.map((s) => (
-                <div key={s.label} className="flex items-center gap-2.5">
-                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white/[0.04] ring-1 ring-white/10">
-                    <s.icon className="h-4 w-4 text-moss-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">{s.value}</div>
-                    <div className="text-[11px] text-slate-400">{s.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Community Impact card */}
-          <div className={`${card} p-5`}>
-            <h3 className="text-base font-semibold text-white">Community Impact</h3>
-            <p className="mt-0.5 text-xs text-slate-400">Making a Real Difference</p>
-            <div className="mt-4 overflow-hidden rounded-xl bg-[#0a1410] ring-1 ring-white/[0.05]">
-              <ImpactMap />
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-              {[
-                { icon: TreePine, value: '12,450', label: 'Trees Planted' },
-                { icon: Cloud, value: '5,230', label: 'CO₂ Offset (kg)' },
-                { icon: Globe2, value: '18', label: 'Countries' },
-              ].map((s) => (
-                <div key={s.label}>
-                  <s.icon className="mx-auto h-4 w-4 text-moss-400" />
-                  <div className="mt-1 text-sm font-bold text-white">{s.value}</div>
-                  <div className="text-[10px] leading-tight text-slate-400">{s.label}</div>
-                </div>
-              ))}
-            </div>
-            <button className="mt-4 w-full rounded-xl bg-gradient-to-r from-moss-500 to-moss-400 py-2.5 text-sm font-semibold text-night-950 transition-opacity hover:opacity-90">
-              View Impact
-            </button>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ── Content (snap section) ───────────────────────────── */}
-      <section
-        className="container-page pb-10 pt-4"
-        style={{ scrollSnapAlign: 'start' }}
-      >
+      {/* ── Content ──────────────────────────────────────────── */}
+      <section className="container-page pb-10 pt-6">
         <div className="grid gap-6 lg:grid-cols-[330px_1fr_370px]">
           {/* Tabs (span left + center) — from left */}
           <motion.div className="lg:col-span-2" {...slide('left')}>

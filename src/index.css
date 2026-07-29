@@ -11,13 +11,9 @@
     scroll-behavior: smooth;
   }
 
-  /* Scoped to the community page (toggled on mount) — gentle scroll-snap
-     between the hero and the content section, offset for the sticky nav.
-     overflow-x: clip stops the slide-in / compress animations from ever
-     creating a horizontal scrollbar. */
+  /* Scoped to the community page (toggled on mount) — overflow-x: clip stops
+     the card slide-in animations from ever creating a horizontal scrollbar. */
   html.community-view {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 72px;
     overflow-x: clip;
   }
 
