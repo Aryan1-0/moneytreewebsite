@@ -55,6 +55,17 @@ export default function WalletModal({
             role="dialog"
             aria-modal="true"
           >
+            {/* Two soft green glows — top-left & bottom-left — blurred so they
+                melt smoothly into the near-black card. */}
+            <div
+              className="pointer-events-none absolute -left-16 -top-16 z-0 h-72 w-72 rounded-full bg-moss-500/[0.16] blur-[110px]"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -bottom-16 -left-16 z-0 h-72 w-72 rounded-full bg-moss-500/[0.13] blur-[110px]"
+              aria-hidden
+            />
+
             <button
               onClick={onClose}
               aria-label="Close"
@@ -63,7 +74,7 @@ export default function WalletModal({
               <X className="h-4 w-4" />
             </button>
 
-            <div className="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-2">
+            <div className="relative z-10 grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-2">
               {/* Left */}
               <div>
                 <h2 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white">
