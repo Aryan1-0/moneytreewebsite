@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, Sprout, TreePine, Globe2, ShieldCheck } from 'lucide-react'
 
@@ -27,22 +28,24 @@ export default function WalletModal({
     }
   }, [open, onClose])
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] grid place-items-center p-4"
+          className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
           <div
-            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm"
             onClick={onClose}
             aria-hidden
           />
 
+          {/* centres the modal, but lets it scroll on short viewports */}
+          <div className="relative flex min-h-full items-center justify-center p-4">
           <motion.div
             className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-moss-400/40 bg-[#040906] shadow-[0_0_70px_-12px_rgba(142,230,90,0.45)]"
             initial={{ opacity: 0, scale: 0.94, y: 14 }}
@@ -121,8 +124,10 @@ export default function WalletModal({
               </div>
             </div>
           </motion.div>
+          </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
