@@ -17,6 +17,17 @@ export default function Token() {
       <Navbar />
 
       <main className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[72px]">
+        {/* Two soft green ambient glows on the left — top & bottom — heavily
+            blurred so they melt smoothly into the black canvas. */}
+        <div
+          className="pointer-events-none absolute -left-40 top-[6%] z-0 h-[460px] w-[460px] rounded-full bg-moss-500/[0.10] blur-[150px]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -left-40 bottom-[2%] z-0 h-[460px] w-[460px] rounded-full bg-moss-500/[0.08] blur-[150px]"
+          aria-hidden
+        />
+
         {/* The coin — absolutely placed on the right, kept fully in view (not
             bleeding off) and centred in the right half like the reference,
             blended with the elliptical tree-blend. */}
