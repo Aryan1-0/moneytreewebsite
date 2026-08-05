@@ -47,7 +47,7 @@ export default function WalletModal({
           {/* centres the modal, but lets it scroll on short viewports */}
           <div className="relative flex min-h-full items-center justify-center p-4">
           <motion.div
-            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-moss-400/40 bg-[#040906] shadow-[0_0_70px_-12px_rgba(142,230,90,0.45)]"
+            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-moss-400/60 bg-[#010304] shadow-[0_0_0_1px_rgba(142,230,90,0.25),0_0_60px_-6px_rgba(142,230,90,0.55)]"
             initial={{ opacity: 0, scale: 0.94, y: 14 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
