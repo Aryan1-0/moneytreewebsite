@@ -69,7 +69,7 @@ export default function WalletModal({
             <button
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/30 text-slate-300 transition-colors hover:text-white"
+              className="absolute right-4 top-4 z-20 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/30 text-slate-300 transition-colors hover:text-white"
             >
               <X className="h-4 w-4" />
             </button>
