@@ -20,7 +20,7 @@ export default function Token() {
         {/* The coin — absolutely placed on the right, kept fully in view (not
             bleeding off) and centred in the right half like the reference,
             blended with the elliptical tree-blend. */}
-        <div className="pointer-events-none absolute right-[1%] top-[47%] z-0 hidden w-[80vw] max-w-[1380px] -translate-y-1/2 lg:block">
+        <div className="pointer-events-none absolute right-[2%] top-[47%] z-0 hidden w-[65vw] max-w-[1104px] -translate-y-1/2 lg:block">
           {/* subtle green glow rising from behind the coin */}
           <div
             className="absolute left-1/2 top-1/2 -z-10 h-[48%] w-[48%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-moss-500/10 blur-[120px]"
