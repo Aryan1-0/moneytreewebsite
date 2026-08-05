@@ -47,7 +47,7 @@ export default function WalletModal({
           {/* centres the modal, but lets it scroll on short viewports */}
           <div className="relative flex min-h-full items-center justify-center p-4">
           <motion.div
-            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-moss-400/60 bg-[#010304] shadow-[0_0_0_1px_rgba(142,230,90,0.25),0_0_60px_-6px_rgba(142,230,90,0.55)]"
+            className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-moss-400/60 bg-[#010304] shadow-[0_0_0_1px_rgba(142,230,90,0.25),0_0_60px_-6px_rgba(142,230,90,0.55)]"
             initial={{ opacity: 0, scale: 0.94, y: 14 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -63,15 +63,15 @@ export default function WalletModal({
               <X className="h-4 w-4" />
             </button>
 
-            <div className="grid items-center gap-6 p-7 sm:p-9 lg:grid-cols-2">
+            <div className="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-2">
               {/* Left */}
               <div>
-                <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white">
+                <h2 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white">
                   Connect
                   <br />
                   <span className="text-gradient">Your Wallet</span>
                 </h2>
-                <p className="mt-3 text-lg font-semibold text-moss-300">
+                <p className="mt-4 text-lg font-semibold text-moss-300">
                   Secure. Simple. Green Impact.
                 </p>
                 <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
@@ -79,23 +79,23 @@ export default function WalletModal({
                   real-world impact on our planet.
                 </p>
 
-                <div className="mt-7 grid max-w-xs grid-cols-3 gap-3">
+                <div className="mt-8 grid grid-cols-3 gap-3">
                   {feats.map((f) => (
-                    <div key={f.l1}>
-                      <f.icon className="h-6 w-6 text-moss-400" />
-                      <div className="mt-2 text-xs font-semibold text-white">{f.l1}</div>
-                      <div className="text-[11px] text-slate-400">{f.l2}</div>
+                    <div key={f.l1} className="text-center">
+                      <f.icon className="mx-auto h-7 w-7 text-moss-400" />
+                      <div className="mt-2.5 text-sm font-semibold text-white">{f.l1}</div>
+                      <div className="mt-0.5 text-xs text-slate-400">{f.l2}</div>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-7 flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <div className="mt-8 flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5">
                   <ShieldCheck className="h-5 w-5 shrink-0 text-moss-400" />
                   <div>
-                    <div className="text-xs font-semibold text-white">
+                    <div className="text-sm font-semibold text-white">
                       We never store your private keys
                     </div>
-                    <div className="text-[11px] text-slate-400">
+                    <div className="mt-0.5 text-xs text-slate-400">
                       Your wallet, your control.
                     </div>
                   </div>
@@ -107,16 +107,16 @@ export default function WalletModal({
                 <img
                   src="/wallet.png"
                   alt="A leather wallet with the TreeGrow leaf"
-                  className="tree-blend w-full max-w-sm select-none"
+                  className="tree-blend w-full max-w-[29rem] select-none"
                   draggable={false}
                 />
                 <button
                   disabled
-                  className="mt-3 w-full max-w-sm cursor-not-allowed rounded-xl border border-moss-400/25 bg-moss-500/[0.08] py-3 text-sm font-semibold text-moss-300/80"
+                  className="mt-5 w-full max-w-[29rem] cursor-not-allowed rounded-xl border border-moss-400/35 bg-gradient-to-b from-moss-500/[0.22] to-moss-500/[0.06] py-3.5 text-[15px] font-semibold text-moss-200 shadow-[0_0_34px_-12px_rgba(142,230,90,0.5)]"
                 >
                   Coming Soon
                 </button>
-                <p className="mt-3 text-center text-xs text-slate-400">
+                <p className="mt-4 text-center text-sm text-slate-400">
                   Wallet connection will be available soon.
                   <br />
                   <span className="font-semibold text-moss-400">Stay tuned!</span>
