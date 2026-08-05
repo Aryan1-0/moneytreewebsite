@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, Wallet } from 'lucide-react'
 import Logo from './Logo'
 import Button from '../ui/Button'
+import WalletModal from '../wallet/WalletModal'
 
 type NavLink = { label: string; hash?: string; to?: string }
 
@@ -12,13 +13,14 @@ const links: NavLink[] = [
   { label: 'Garden', hash: '#how' },
   { label: 'Dashboard', hash: '#features' },
   { label: 'Marketplace', hash: '#tokenomics' },
-  { label: 'Token', hash: '#tokenomics' },
+  { label: 'Token', to: '/token' },
   { label: 'Community', to: '/community' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [walletOpen, setWalletOpen] = useState(false)
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const onHome = pathname === '/'
@@ -31,7 +33,7 @@ export default function Navbar() {
   }, [])
 
   const isActive = (l: NavLink) =>
-    (l.to === '/community' && pathname === '/community') || (l.hash === '#home' && onHome)
+    (l.to != null && pathname === l.to) || (l.hash === '#home' && onHome)
 
   // Section anchors scroll on the home page; from any other page they navigate
   // home first, then scroll — so the same nav works everywhere.
@@ -94,7 +96,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Button size="md">
+          <Button size="md" onClick={() => setWalletOpen(true)}>
             <Wallet className="h-4 w-4" />
             Connect Wallet
           </Button>
@@ -120,13 +122,21 @@ export default function Navbar() {
             >
               Admin Panel
             </Link>
-            <Button className="mt-2 w-full">
+            <Button
+              className="mt-2 w-full"
+              onClick={() => {
+                setOpen(false)
+                setWalletOpen(true)
+              }}
+            >
               <Wallet className="h-4 w-4" />
               Connect Wallet
             </Button>
           </div>
         </div>
       )}
+
+      <WalletModal open={walletOpen} onClose={() => setWalletOpen(false)} />
     </header>
   )
 }
