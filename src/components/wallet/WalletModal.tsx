@@ -81,8 +81,8 @@ export default function WalletModal({
 
                 <div className="mt-8 grid grid-cols-3 gap-3">
                   {feats.map((f) => (
-                    <div key={f.l1} className="text-center">
-                      <f.icon className="mx-auto h-7 w-7 text-moss-400" />
+                    <div key={f.l1}>
+                      <f.icon className="h-7 w-7 text-moss-400" />
                       <div className="mt-2.5 text-sm font-semibold text-white">{f.l1}</div>
                       <div className="mt-0.5 text-xs text-slate-400">{f.l2}</div>
                     </div>
