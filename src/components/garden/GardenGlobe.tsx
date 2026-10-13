@@ -177,7 +177,7 @@ function Globe({
     }
   }, [gl, onUserRotate])
 
-  useFrame((_, delta) => {
+  useFrame(({ camera }, delta) => {
     const g = group.current
     if (!g) return
     if (!drag.current.active) {
@@ -193,12 +193,22 @@ function Globe({
         g.rotation.y += delta * 0.08 // idle spin
       }
     }
-    // Show only front-hemisphere pins (camera looks down -Z at the origin).
+    // Show only front-hemisphere pins (camera looks down -Z at the origin), and
+    // stack them like map pins: the lower a pin's point sits on screen, the
+    // further in front it goes (its head grows up over the pins behind it).
+    // drei's own distance-based z-index rounds every pin to the same value, so
+    // DOM order would win and later pins would always cover earlier ones.
     for (let i = 0; i < SITES.length; i++) {
       const el = pinRefs.current[i]
       if (!el) continue
-      const wz = tmp.copy(pinBases[i]).applyQuaternion(g.quaternion).z
-      el.style.visibility = wz > 0.12 ? 'visible' : 'hidden'
+      tmp.copy(pinBases[i]).applyQuaternion(g.quaternion)
+      el.style.visibility = tmp.z > 0.12 ? 'visible' : 'hidden'
+      const wrapper = el.closest<HTMLElement>('.gd-globe-html')
+      if (!wrapper) continue
+      const ndcY = tmp.project(camera).y // -1 (bottom) … 1 (top)
+      const z =
+        selected?.key === SITES[i].key ? 500 : 100 + Math.round((1 - ndcY) * 100)
+      wrapper.style.zIndex = `${z}`
     }
   })
 
@@ -250,7 +260,7 @@ function Globe({
         const Flag = FLAGS[s.key]
         return (
           <group key={s.key} position={[v.x, v.y, v.z]}>
-            <Html zIndexRange={active ? [400, 300] : [16, 0]} wrapperClass="gd-globe-html">
+            <Html zIndexRange={[0, 0]} wrapperClass="gd-globe-html">
               <div
                 className={`gd-pin${s.hub ? ' is-hub' : ''}${active ? ' is-active' : ''}`}
                 ref={(el) => {
