@@ -94,16 +94,18 @@
   transform-origin: 50% 94%;
 }
 .gd-pin-shape { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* Round flags: a circular window over the 3:2 flag, cropped to its centre */
 .gd-pin-ico {
   position: absolute; left: 50%; top: 44%; z-index: 2;
   transform: translate(-50%, -50%);
-  width: 22px; height: 15px; border-radius: 3px; overflow: hidden;
-  display: flex; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+  width: 21px; height: 21px; border-radius: 50%; overflow: hidden;
+  display: flex; justify-content: center;
+  box-shadow: 0 0 0 1.5px #fff, 0 1px 3px rgba(0, 0, 0, 0.5);
 }
-.gd-pin-ico svg { width: 100%; height: 100%; display: block; }
+.gd-pin-ico svg { height: 100%; width: auto; flex: none; display: block; }
 .gd-pin.is-hub { width: 50px; height: 64px; }
 .gd-pin.is-hub .gd-pin-marker { width: 50px; height: 64px; }
-.gd-pin.is-hub .gd-pin-ico { width: 27px; height: 18px; }
+.gd-pin.is-hub .gd-pin-ico { width: 25px; height: 25px; }
 .gd-pin-marker:hover { transform: scale(1.1); }
 
 /* Label pill — hover/selected only, no clutter */
@@ -159,10 +161,11 @@
   box-shadow: 0 0 16px rgba(142, 230, 90, 0.18);
 }
 .gd-flag {
-  width: 21px; height: 14px; flex: none; border-radius: 2px; overflow: hidden;
-  display: inline-flex; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  width: 20px; height: 20px; flex: none; border-radius: 50%; overflow: hidden;
+  display: inline-flex; justify-content: center;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.9);
 }
-.gd-flag svg { width: 100%; height: 100%; display: block; }
+.gd-flag svg { height: 100%; width: auto; flex: none; display: block; }
 .gd-name { font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; font-size: 12px; }
 .gd-num { color: #8ee65a; font-weight: 600; margin-left: auto; font-size: 11.5px; white-space: nowrap; }
 .gd-row.is-hub .gd-name { color: #b8ff86; }
