@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
+import { lazy, Suspense } from 'react'
 import Community from './pages/Community'
 import Token from './pages/Token'
 import AdminLogin from './pages/AdminLogin'
@@ -8,6 +9,9 @@ import AdminUsers from './pages/AdminUsers'
 import AdminMap from './pages/AdminMap'
 import AdminLayout from './components/admin/AdminLayout'
 import { useAuth } from './lib/auth'
+
+// three.js is heavy — only load it when someone opens the Garden page.
+const Garden = lazy(() => import('./pages/Garden'))
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { isAuthed } = useAuth()
@@ -18,6 +22,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route
+        path="/garden"
+        element={
+          <Suspense fallback={null}>
+            <Garden />
+          </Suspense>
+        }
+      />
       <Route path="/community" element={<Community />} />
       <Route path="/token" element={<Token />} />
       <Route path="/admin/login" element={<AdminLogin />} />

@@ -10,7 +10,7 @@ type NavLink = { label: string; hash?: string; to?: string }
 
 const links: NavLink[] = [
   { label: 'Home', hash: '#home' },
-  { label: 'Garden', hash: '#how' },
+  { label: 'Garden', to: '/garden' },
   { label: 'Dashboard', hash: '#features' },
   { label: 'Marketplace', hash: '#tokenomics' },
   { label: 'Token', to: '/token' },
