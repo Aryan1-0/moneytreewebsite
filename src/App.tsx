@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import { lazy, Suspense } from 'react'
 import Community from './pages/Community'
+import Marketplace from './pages/Marketplace'
 import Token from './pages/Token'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
@@ -30,6 +31,7 @@ export default function App() {
           </Suspense>
         }
       />
+      <Route path="/marketplace" element={<Marketplace />} />
       <Route path="/community" element={<Community />} />
       <Route path="/token" element={<Token />} />
       <Route path="/admin/login" element={<AdminLogin />} />

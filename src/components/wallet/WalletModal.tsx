@@ -21,10 +21,11 @@ export default function WalletModal({
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
+    // lock <html>, the page's scroller (see index.css)
+    document.documentElement.style.overflowY = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
+      document.documentElement.style.overflowY = ''
     }
   }, [open, onClose])
 

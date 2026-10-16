@@ -9,6 +9,10 @@
 
   html {
     scroll-behavior: smooth;
+    /* Always show the scrollbar track, so moving between a short page (no
+       scrollbar, e.g. Token) and a long one doesn't shift the layout
+       sideways. (scrollbar-gutter isn't honoured on the root in Chrome.) */
+    overflow-y: scroll;
   }
 
   /* Scoped to the community page (toggled on mount) — overflow-x: clip stops
