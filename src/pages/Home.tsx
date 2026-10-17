@@ -1,6 +1,7 @@
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import Hero from '../components/home/Hero'
+import ExploreNetwork from '../components/home/ExploreNetwork'
 import Features from '../components/home/Features'
 import HowItWorks from '../components/home/HowItWorks'
 import Tokenomics from '../components/home/Tokenomics'
@@ -12,6 +13,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <ExploreNetwork />
         <Features />
         <HowItWorks />
         <Tokenomics />
