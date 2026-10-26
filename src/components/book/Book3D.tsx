@@ -22,7 +22,7 @@ import {
 } from 'three'
 import { SHEETS } from './bookContent'
 import { paintFace } from './paintPage'
-import { playPageFlip } from './pageFlipSound'
+import { playPageFlip, preloadPageFlip } from './pageFlipSound'
 
 /*
  * 3D page-turning book — adapted from wass08/r3f-animated-book-slider.
@@ -218,6 +218,9 @@ function Book({
   }, [page])
 
   // One flip sound per sheet turned; softer while riffling through many.
+  useEffect(() => {
+    if (sound) void preloadPageFlip()
+  }, [sound])
   const lastSounded = useRef(delayedPage)
   useEffect(() => {
     if (delayedPage === lastSounded.current) return
