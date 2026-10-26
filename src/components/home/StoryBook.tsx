@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight, MousePointerClick } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MousePointerClick, Volume2, VolumeX } from 'lucide-react'
 import Reveal from '../ui/Reveal'
 import { CHAPTERS, LAST_PAGE, SHEETS, type Face } from '../book/bookContent'
 import type { Focus } from '../book/Book3D'
@@ -114,6 +114,24 @@ export default function StoryBook() {
     if (narrow && open && dir === -1 && side === 'right') return setSide('left')
     go(page + dir)
   }
+  // Page-flip sound, on by default; the choice is remembered.
+  const [sound, setSound] = useState(() => {
+    try {
+      return localStorage.getItem('gw-book-sound') !== 'off'
+    } catch {
+      return true
+    }
+  })
+  const toggleSound = () =>
+    setSound((on) => {
+      try {
+        localStorage.setItem('gw-book-sound', on ? 'off' : 'on')
+      } catch {
+        /* storage unavailable — keep the in-memory choice */
+      }
+      return !on
+    })
+
   const onReady = useCallback(() => setReady(true), [])
   const active = chapterOf(page)
   const open = page > 0 && page < LAST_PAGE
@@ -175,7 +193,7 @@ export default function StoryBook() {
           >
             {near && (
               <Suspense fallback={null}>
-                <Book3D page={page} onPageChange={go} active={inView} focus={focus} onReady={onReady} />
+                <Book3D page={page} onPageChange={go} active={inView} focus={focus} sound={sound} onReady={onReady} />
               </Suspense>
             )}
             {!ready && (
@@ -228,9 +246,20 @@ export default function StoryBook() {
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>
-            <p className="inline-flex items-center gap-1.5 text-xs text-slate-500">
-              <MousePointerClick className="h-3.5 w-3.5" /> Tap or click a page, or use the arrows to turn
-            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-500">
+              <p className="inline-flex items-center gap-1.5">
+                <MousePointerClick className="h-3.5 w-3.5" /> Tap or click a page, or use the arrows to turn
+              </p>
+              <button
+                type="button"
+                onClick={toggleSound}
+                aria-pressed={sound}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1 text-slate-400 transition-colors hover:border-moss-400/50 hover:text-moss-300"
+              >
+                {sound ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+                {sound ? 'Sound on' : 'Sound off'}
+              </button>
+            </div>
           </div>
         </motion.div>
 

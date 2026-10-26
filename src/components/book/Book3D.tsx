@@ -22,6 +22,7 @@ import {
 } from 'three'
 import { SHEETS } from './bookContent'
 import { paintFace } from './paintPage'
+import { playPageFlip } from './pageFlipSound'
 
 /*
  * 3D page-turning book — adapted from wass08/r3f-animated-book-slider.
@@ -190,7 +191,17 @@ function Page({
   )
 }
 
-function Book({ page, textures, onTurn }: { page: number; textures: Faces[]; onTurn: (p: number) => void }) {
+function Book({
+  page,
+  textures,
+  onTurn,
+  sound,
+}: {
+  page: number
+  textures: Faces[]
+  onTurn: (p: number) => void
+  sound: boolean
+}) {
   // Turn one sheet at a time toward `page`, so jumping chapters riffles pages.
   const [delayedPage, setDelayedPage] = useState(page)
   useEffect(() => {
@@ -205,6 +216,14 @@ function Book({ page, textures, onTurn }: { page: number; textures: Faces[]; onT
     step()
     return () => clearTimeout(timeout)
   }, [page])
+
+  // One flip sound per sheet turned; softer while riffling through many.
+  const lastSounded = useRef(delayedPage)
+  useEffect(() => {
+    if (delayedPage === lastSounded.current) return
+    lastSounded.current = delayedPage
+    if (sound) playPageFlip(delayedPage === page ? 1 : 0.55)
+  }, [delayedPage, page, sound])
 
   // Slide the book so it stays centred: a closed book sits to one side of its spine.
   const slide = useRef<Group>(null)
@@ -304,12 +323,14 @@ export default function Book3D({
   onPageChange,
   active,
   focus = 'spread',
+  sound = true,
   onReady,
 }: {
   page: number
   onPageChange: (page: number) => void
   active: boolean // animate only while on screen
   focus?: Focus
+  sound?: boolean
   onReady?: () => void
 }) {
   const textures = useBookTextures()
@@ -332,7 +353,7 @@ export default function Book3D({
       {textures && (
         <Tilt>
           <Float floatIntensity={0.35} rotationIntensity={0.15} speed={1.6}>
-            <Book page={page} textures={textures} onTurn={onPageChange} />
+            <Book page={page} textures={textures} onTurn={onPageChange} sound={sound} />
           </Float>
         </Tilt>
       )}
